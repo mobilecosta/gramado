@@ -54,6 +54,7 @@ User Function GPKCOM02(cAlias,nReg,nOpc)
 
 	Local lPergunte  := .t. //Informe os parâmetros
 	Local lEnvEmail  := .t. //Envia o pedido para o e-mail do fornecedor
+	Local lAuto      := .F.
 
 	Default cAlias   := ""
 
@@ -62,6 +63,7 @@ User Function GPKCOM02(cAlias,nReg,nOpc)
 		lPergunte := .t.
 	Case Upper(cAlias) == "ENVIAR"   //Chamado pelo ponto de entrada MT094END
 		lPergunte := .f.
+		lAuto     := .T.
 	Otherwise                        //Chamado pelo menu específico
 		lPergunte := .t.
 	EndCase
@@ -92,7 +94,7 @@ User Function GPKCOM02(cAlias,nReg,nOpc)
 	EndIf
 
 	If lContinua
-		Processa( {|| fMontaRel(lEnvEmail) }, "Impressão Pedidos de Compra", "Processando...")
+		Processa( {|| fMontaRel(lEnvEmail,lAuto) }, "Impressão Pedidos de Compra", "Processando...")
 	EndIf
 
 	RestArea(aAreaA2)
@@ -108,7 +110,7 @@ Função principal que monta o relatório
 @since 06/01/2019
 @param lEnvEmail, logical, Se envia e-mail para o fornecedor
 /*/
-Static Function fMontaRel(lEnvEmail) //Envia o pedido para o e-mail do fornecedor
+Static Function fMontaRel(lEnvEmail,lAuto) //Envia o pedido para o e-mail do fornecedor
 	//Variáveis usada no controle das réguas
 	Local nTotIte    := 0
 	Local nItAtu     := 0
@@ -394,7 +396,7 @@ Static Function fMontaRel(lEnvEmail) //Envia o pedido para o e-mail do fornecedo
 					cBody    := "Pedido de Compra: " + SC7->C7_NUM
 					aFile    := {cFile}      //Arquivos a serem anexados
 					lMsg     := .t.          //Mostra a mensagem com sucesso ou erro
-					If MsgYesNo("Confirma o envio do pedido de compra para o e-mail: "+cTo+" ??")
+					If lAuto .Or. MsgYesNo("Confirma o envio do pedido de compra para o e-mail: "+cTo+" ??")
 						U_GPKMAIL(cTo,cCC,cSubject,cBody,aFile,lMsg,DEF_DEBUG) //Envia e-mail
 					EndIf
 					FERASE(cFile) //Apaga o arquivo enviado como anexo
