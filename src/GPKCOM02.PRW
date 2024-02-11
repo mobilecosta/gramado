@@ -60,7 +60,7 @@ User Function GPKCOM02(cAlias,nReg,nOpc)
 	Do Case
 	Case Upper(cAlias) == "SC7"      //Chamado pelo ponto de entrada MT120BRW
 		lPergunte := .t.
-	Case Upper(cAlias) == "Enviar"   //Chamado pelo ponto de entrada MT094END
+	Case Upper(cAlias) == "ENVIAR"   //Chamado pelo ponto de entrada MT094END
 		lPergunte := .f.
 	Otherwise                        //Chamado pelo menu específico
 		lPergunte := .t.
