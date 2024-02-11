@@ -275,6 +275,7 @@ Static Function fMontaRel(lEnvEmail,lAuto) //Envia o pedido para o e-mail do for
 			cQryIte += "    ,C7_UM "                                        + CRLF
 			cQryIte += "    ,C7_DESCRI"                                     + CRLF
 			cQryIte += "    ,ISNULL(CONVERT(VARCHAR(8000),CONVERT(BINARY(8000),C7_OBSM)),'') AS C7_OBSM " + CRLF
+			cQryIte += "    ,B5_CEME "                                      + CRLF
 			cQryIte += " FROM "                                             + CRLF
 			cQryIte += "    " + RetSQLName("SC7") + " SC7 "                 + CRLF
 			cQryIte += "    LEFT  JOIN " + RetSQLName("SB1") + " SB1 ON ( " + CRLF
@@ -356,6 +357,12 @@ Static Function fMontaRel(lEnvEmail,lAuto) //Envia o pedido para o e-mail do for
 				If !Empty(QRY_ITE->C7_OBSM)
 					nLinAtu += 7
 					nLinAtu := fImpTexto("3", aSM0, oPrintPvt, nLinAtu, aPos[Ascan(aPos,{|x|x[1]=="DesPro"}),2], Alltrim(QRY_ITE->C7_OBSM),                     oFontDet, 1000, 07, , nPadLeft, )
+				EndIf
+
+				// Washington 09/02/2024 - Tratamento 
+				If !Empty(QRY_ITE->B5_CEME)
+					nLinAtu += 7
+					nLinAtu := fImpTexto("3", aSM0, oPrintPvt, nLinAtu, aPos[Ascan(aPos,{|x|x[1]=="DesPro"}),2], Alltrim(QRY_ITE->B5_CEME), oFontDet, 1000, 07, , nPadLeft, )
 				EndIf
 
 				nLinAtu += 7
