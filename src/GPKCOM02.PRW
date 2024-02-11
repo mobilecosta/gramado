@@ -61,6 +61,7 @@ User Function GPKCOM02(cAlias,nReg,nOpc)
 	Do Case
 	Case Upper(cAlias) == "SC7"      //Chamado pelo ponto de entrada MT120BRW
 		lPergunte := .t.
+	// Washington - 09/02/2024 - Trocar "Enviar" por "ENVIAR" 
 	Case Upper(cAlias) == "ENVIAR"   //Chamado pelo ponto de entrada MT094END
 		lPergunte := .f.
 		lAuto     := .T.
@@ -396,6 +397,7 @@ Static Function fMontaRel(lEnvEmail,lAuto) //Envia o pedido para o e-mail do for
 					cBody    := "Pedido de Compra: " + SC7->C7_NUM
 					aFile    := {cFile}      //Arquivos a serem anexados
 					lMsg     := .t.          //Mostra a mensagem com sucesso ou erro
+					// Washington - 09/02/2024 - Inclusão do tratamento da variavel lAuto
 					If lAuto .Or. MsgYesNo("Confirma o envio do pedido de compra para o e-mail: "+cTo+" ??")
 						U_GPKMAIL(cTo,cCC,cSubject,cBody,aFile,lMsg,DEF_DEBUG) //Envia e-mail
 					EndIf
