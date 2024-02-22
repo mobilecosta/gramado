@@ -359,7 +359,7 @@ Static Function fMontaRel(lEnvEmail,lAuto) //Envia o pedido para o e-mail do for
 					nLinAtu := fImpTexto("3", aSM0, oPrintPvt, nLinAtu, aPos[Ascan(aPos,{|x|x[1]=="DesPro"}),2], Alltrim(QRY_ITE->C7_OBSM),                     oFontDet, 1000, 07, , nPadLeft, )
 				EndIf
 
-				// Washington 09/02/2024 - Tratamento 
+				// Washington 09/02/2024 - Tratamento descrição cientifica
 				If !Empty(QRY_ITE->B5_CEME)
 					nLinAtu += 7
 					nLinAtu := fImpTexto("3", aSM0, oPrintPvt, nLinAtu, aPos[Ascan(aPos,{|x|x[1]=="DesPro"}),2], Alltrim(QRY_ITE->B5_CEME), oFontDet, 1000, 07, , nPadLeft, )
